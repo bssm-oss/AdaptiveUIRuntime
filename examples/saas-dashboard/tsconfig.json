@@ -5,6 +5,8 @@
     "types": ["node", "vite/client"],
     "paths": {
       "@adaptive-ui/core": ["../../packages/core/src/index.ts"],
+      "@adaptive-ui/llm": ["../../packages/llm/src/index.ts"],
+      "@adaptive-ui/llm/openai": ["../../packages/llm/src/openai.ts"],
       "@adaptive-ui/react": ["../../packages/react/src/index.ts"],
       "@adaptive-ui/devtools": ["../../packages/devtools/src/index.ts"]
     }
