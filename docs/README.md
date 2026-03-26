@@ -21,6 +21,7 @@ If you are new to the repository, read in this order:
 
 - `docs/specification.md`
 - `docs/architecture.md`
+- `docs/product-positioning.md`
 - `docs/user-profile.md`
 - `docs/context-model.md`
 - `docs/adaptation-plan.md`
@@ -62,6 +63,7 @@ If you are new to the repository, read in this order:
 - `docs/ssr-and-hydration.md`
 - `docs/devtools.md`
 - `docs/example-walkthrough.md`
+- `docs/demo-script.md`
 - `docs/experimentation.md`
 - `docs/security-and-trust-boundaries.md`
 - `docs/agent-guide.md`
@@ -80,6 +82,8 @@ If you are new to the repository, read in this order:
 
 ### Product and design leads
 
+- `docs/product-positioning.md`
+- `docs/demo-script.md`
 - `docs/adoption-playbook.md`
 - `docs/design-system-integration.md`
 - `docs/anti-patterns.md`
@@ -118,8 +122,9 @@ If you are new to the repository, read in this order:
 
 목적별 추천은 다음과 같습니다.
 
-- 제품 모델 이해: `user-profile`, `context-model`, `adaptation-plan`, `stability-model`
+- 제품 모델 이해: `product-positioning`, `user-profile`, `context-model`, `adaptation-plan`, `stability-model`
 - 실제 통합: `react-integration`, `llm-integration`, `nextjs`, `storage-and-privacy`, `design-system-integration`
 - surface와 rule 작성: `surface-schema`, `surface-authoring`, `rule-authoring`, `anti-patterns`
 - 운영과 배포: `testing`, `qa-checklist`, `performance`, `troubleshooting`, `publishing`, `release-process`
+- 시연과 설명: `demo-script`, `example-walkthrough`, `faq`
 - 유지보수와 에이전트 작업: `AGENTS.md`, `agent-guide`, `change-playbook`, `review-standards`, `maintainer-checklist`

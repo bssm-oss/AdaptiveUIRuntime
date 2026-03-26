@@ -21,6 +21,7 @@ Instead, it resolves an `AdaptationPlan` for a known product surface and uses th
 - [Explicit Preferences Vs Learned Preferences](#explicit-preferences-vs-learned-preferences)
 - [Architecture At A Glance](#architecture-at-a-glance)
 - [Package Overview](#package-overview)
+- [Who This Project Is For](#who-this-project-is-for)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Core Data Model](#core-data-model)
@@ -37,6 +38,7 @@ Instead, it resolves an `AdaptationPlan` for a known product surface and uses th
 - [Performance Principles](#performance-principles)
 - [When Personalization Must Not Apply](#when-personalization-must-not-apply)
 - [Example App](#example-app)
+- [How To Demo This Project](#how-to-demo-this-project)
 - [Public API Summary](#public-api-summary)
 - [Testing And Verification](#testing-and-verification)
 - [Development Commands](#development-commands)
@@ -202,6 +204,21 @@ Surface Schema + User Profile + Context Snapshot + Behavior Summary
   Intent compiler layer that turns user requests into safe adaptive recommendations and validated preference updates.
 - `examples/saas-dashboard`
   Example Vite React app demonstrating constrained adaptation with three personas.
+
+## Who This Project Is For
+
+This project is primarily for:
+
+- frontend platform teams building a shared personalization layer
+- design system teams that want controlled per-user adaptation
+- product engineers working on dashboards, admin tools, or internal tools
+- teams that want explainable UI adaptation without free-form generation
+
+It is a poor fit for:
+
+- products that want raw prompt-to-DOM generation
+- one-off landing pages with no stable design system
+- experiences where the UI contract itself is intentionally unconstrained
 
 ## Installation
 
@@ -699,6 +716,22 @@ The example app in `examples/saas-dashboard` demonstrates:
 - plan freezing
 - behavior-driven learned updates
 
+## How To Demo This Project
+
+If you need to explain the project to someone quickly, use this sequence:
+
+1. show the same dashboard in novice, expert, and mobile simulation modes
+2. change theme, density, and navigation manually to show explicit override priority
+3. use the Korean intent input to request a different screen immediately
+4. open devtools and show the selected plan, why trace, and score contributions
+5. explain that the screen changed immediately, but only inside approved slots and variants
+
+The core message is:
+
+- users can ask for the screen they want right now
+- the result updates immediately
+- the system still stays deterministic, explainable, and safe
+
 ## Public API Summary
 
 ### Core
@@ -831,6 +864,8 @@ PATH=/opt/homebrew/bin:/usr/bin:/bin:$PATH pnpm bench
 - [Testing Guide](./docs/testing.md)
 - [QA Checklist](./docs/qa-checklist.md)
 - [Example Walkthrough](./docs/example-walkthrough.md)
+- [Demo Script](./docs/demo-script.md)
+- [Product Positioning](./docs/product-positioning.md)
 - [Surface Authoring](./docs/surface-authoring.md)
 - [Rule Authoring](./docs/rule-authoring.md)
 - [Anti-Patterns](./docs/anti-patterns.md)
@@ -1000,6 +1035,21 @@ pnpm usage
 pnpm check
 pnpm verify
 ```
+
+### 누가 이 프로젝트를 읽으면 좋은가
+
+이 프로젝트는 다음 팀에 특히 잘 맞습니다.
+
+- frontend platform 팀
+- design system 팀
+- dashboard, admin, internal tool을 만드는 product engineer
+- 자유 생성이 아니라 설명 가능한 적응형 UI가 필요한 팀
+
+반대로 다음 경우에는 잘 맞지 않습니다.
+
+- prompt로 DOM을 바로 생성하려는 경우
+- 안정적인 design system 계약이 없는 경우
+- 화면 계약 자체를 의도적으로 고정하지 않는 경우
 
 ### 핵심 데이터 모델
 
@@ -1205,6 +1255,16 @@ SSR 안전성은 이 프로젝트의 핵심 요구사항입니다.
 
 이 예제 앱은 same app, different plan이라는 프로젝트 핵심 메시지를 보여주기 위한 vertical slice입니다.
 
+### 이 프로젝트를 어떻게 시연하면 좋은가
+
+짧게 보여줄 때는 아래 순서가 가장 좋습니다.
+
+1. 같은 대시보드가 초보 관리자, 숙련 분석가, 모바일 빠른 확인 시나리오에서 어떻게 달라지는지 보여줍니다.
+2. 테마, 밀도, 탐색을 직접 바꿔 explicit override가 자동 추정보다 우선하는 것을 보여줍니다.
+3. `원하는 화면 요청` 입력창에 한국어 문장을 넣어 바로 다른 화면 구성이 나오는 것을 보여줍니다.
+4. devtools를 열어 why trace와 score breakdown을 보여줍니다.
+5. 마지막으로 “즉시 바뀌지만 자유 생성은 아니고, 승인된 variant 안에서만 다시 계획하는 구조”라고 설명하면 됩니다.
+
 ### API와 검증
 
 Core API 예시는 다음과 같습니다.
@@ -1263,6 +1323,8 @@ consumer smoke test는 이제 두 가지를 확인합니다.
 - [Recipes](./docs/recipes.md)
 - [Testing Guide](./docs/testing.md)
 - [QA Checklist](./docs/qa-checklist.md)
+- [Demo Script](./docs/demo-script.md)
+- [Product Positioning](./docs/product-positioning.md)
 - [Example Walkthrough](./docs/example-walkthrough.md)
 - [Surface Authoring](./docs/surface-authoring.md)
 - [Rule Authoring](./docs/rule-authoring.md)
