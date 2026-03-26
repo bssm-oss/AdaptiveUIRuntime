@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": ["node", "vite/client"],
+    "paths": {
+      "@adaptive-ui/core": ["../../packages/core/src/index.ts"],
+      "@adaptive-ui/react": ["../../packages/react/src/index.ts"],
+      "@adaptive-ui/devtools": ["../../packages/devtools/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts"]
+}
