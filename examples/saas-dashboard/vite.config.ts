@@ -9,6 +9,12 @@ export default defineConfig({
       '@adaptive-ui/core': fileURLToPath(
         new URL('../../packages/core/src/index.ts', import.meta.url)
       ),
+      '@adaptive-ui/llm': fileURLToPath(
+        new URL('../../packages/llm/src/index.ts', import.meta.url)
+      ),
+      '@adaptive-ui/llm/openai': fileURLToPath(
+        new URL('../../packages/llm/src/openai.ts', import.meta.url)
+      ),
       '@adaptive-ui/react': fileURLToPath(
         new URL('../../packages/react/src/index.ts', import.meta.url)
       ),
