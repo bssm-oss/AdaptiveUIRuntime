@@ -35,6 +35,10 @@ The devtools can simulate:
 
 These simulations should be bounded and reversible.
 
+The panel and overlay also support localized UI copy through a `labels` prop.
+This is useful when the host product is localized but the underlying runtime
+contracts remain the same.
+
 ## Freeze Current Plan
 
 The freeze control is meant for:
@@ -59,3 +63,4 @@ devtools의 목적은 adaptive UI를 "자동으로 뭔가 바뀌는 검은 상�
 - stability/cooldown 때문에 유지되었는지 여부
 
 simulate와 freeze 기능은 디버깅과 QA를 위해 존재합니다.
+패널과 오버레이는 `labels` prop으로 표시 문구를 현지화할 수도 있습니다.

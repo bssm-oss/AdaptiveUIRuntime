@@ -54,12 +54,14 @@ body {
 }
 
 button,
-select {
+select,
+textarea {
   font: inherit;
 }
 
 button:focus-visible,
-select:focus-visible {
+select:focus-visible,
+textarea:focus-visible {
   outline: 3px solid rgba(37, 99, 235, 0.35);
   outline-offset: 2px;
 }
@@ -96,6 +98,74 @@ select:focus-visible {
   box-shadow: var(--surface-shadow);
   padding: var(--space-6);
   margin-bottom: var(--space-5);
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.guide-card {
+  background: var(--surface-bg);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--surface-shadow);
+  padding: var(--space-5);
+}
+
+.guide-card h2 {
+  margin: var(--space-2) 0 0;
+  font-size: 1.05rem;
+}
+
+.intent-studio {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.intent-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: var(--space-4);
+}
+
+.intent-form {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.intent-label {
+  font-weight: 600;
+}
+
+.intent-textarea {
+  min-height: 8rem;
+  resize: vertical;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--surface-border);
+  background: rgba(255, 255, 255, 0.72);
+  color: inherit;
+  padding: 0.9rem 1rem;
+}
+
+.app-shell[data-theme='dark'] .intent-textarea {
+  background: rgba(15, 23, 42, 0.72);
+}
+
+.intent-result {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.guide-list {
+  margin: var(--space-4) 0 0;
+  padding-left: 1.2rem;
+  color: var(--text-secondary);
+  display: grid;
+  gap: var(--space-3);
 }
 
 .eyebrow,
@@ -466,6 +536,15 @@ select:focus-visible {
 }
 
 @media (max-width: 1024px) {
+  .guide-grid,
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .intent-header {
+    flex-direction: column;
+  }
+
   .dashboard-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-areas:
