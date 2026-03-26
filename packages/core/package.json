@@ -1,10 +1,26 @@
 {
   "name": "@adaptive-ui/core",
+  "description": "Deterministic adaptive UI planning engine for constrained personalization.",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bssm-oss/GenerativeUI.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/bssm-oss/GenerativeUI#readme",
+  "bugs": {
+    "url": "https://github.com/bssm-oss/GenerativeUI/issues"
+  },
   "sideEffects": false,
   "exports": {
     ".": {
