@@ -12,10 +12,12 @@ Its purpose is to validate that a consumer can:
 
 - import `@adaptive-ui/core`
 - import `@adaptive-ui/react`
+- import `@adaptive-ui/llm`
 - define a surface
 - resolve plans
 - render with React
 - observe explicit and learned adaptation changes
+- compile and apply a safe natural-language recommendation
 
 Run it with:
 
@@ -30,6 +32,7 @@ Expected validation flow:
 1. Initial profile renders the summary-first variant.
 2. Explicit `defaultView = chart` renders the chart-first variant.
 3. Repeated chart interactions with `defaultView = auto` make the learned profile prefer the chart-first variant.
+4. A natural-language request is compiled through `@adaptive-ui/llm` and immediately applied as safe runtime updates.
 
 If this test ever starts importing `packages/*/src/*` directly, it stops being a true consumer-contract test and should be corrected.
 
@@ -42,10 +45,12 @@ If this test ever starts importing `packages/*/src/*` directly, it stops being a
 
 - `@adaptive-ui/core` import 가능 여부
 - `@adaptive-ui/react` import 가능 여부
+- `@adaptive-ui/llm` import 가능 여부
 - surface 정의와 plan 계산
 - React SSR 렌더링 가능 여부
 - explicit preference 적용
 - learned preference에 따른 variant 변경
+- 자연어 요청을 recommendation으로 바꿔 즉시 적용할 수 있는지
 
 실행은 루트에서 아래처럼 합니다.
 
@@ -58,6 +63,7 @@ If this test ever starts importing `packages/*/src/*` directly, it stops being a
 1. 초기 상태에서 summary-first variant가 렌더됨
 2. explicit `defaultView = chart`를 주면 chart-first variant가 렌더됨
 3. explicit override를 제거한 뒤 chart interaction을 반복하면 learned preference가 올라가 chart-first variant가 다시 선택됨
+4. 자연어 요청을 `@adaptive-ui/llm`으로 해석해 safe recommendation으로 바꾸고 즉시 적용함
 
 중요한 점은 이 테스트가 monorepo 내부 `src/*`를 직접 import하면 안 된다는 것입니다.
 그렇게 되면 실제 패키지 소비자 계약을 검증하는 테스트가 아니라, 내부 개발 환경 테스트로 바뀌기 때문입니다.

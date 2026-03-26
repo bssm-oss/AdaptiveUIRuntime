@@ -1,9 +1,93 @@
 import { useMemo } from 'react';
 import { useAdaptiveDevtools } from '@adaptive-ui/react';
+import type { AdaptiveScenarioName } from '@adaptive-ui/react';
+
+export interface AdaptiveDevtoolsLabels {
+  ariaLabel: string;
+  title: string;
+  noSurfaceMounted: string;
+  hide: string;
+  pin: string;
+  profile: string;
+  density: string;
+  theme: string;
+  nav: string;
+  expertise: string;
+  learnedDenseUi: string;
+  learnedCharts: string;
+  learnedKeyboardFlow: string;
+  learnedStableLayout: string;
+  controls: string;
+  freezeCurrentPlan: string;
+  unfreeze: string;
+  resetDefaults: string;
+  clearSimulation: string;
+  simulateNovice: string;
+  simulateExpert: string;
+  simulateMobile: string;
+  highContrast: string;
+  reducedMotion: string;
+  simulation: string;
+  simulationNames: Partial<Record<AdaptiveScenarioName, string>>;
+  plan: string;
+  layoutMode: string;
+  disclosure: string;
+  transition: string;
+  confidence: string;
+  cooldownZones: string;
+  none: string;
+  noPlanYet: string;
+  zones: string;
+  score: string;
+  whyTrace: string;
+  exposureLog: string;
+}
 
 export interface AdaptiveDevtoolsPanelProps {
   surfaceId?: string;
+  labels?: Partial<AdaptiveDevtoolsLabels>;
 }
+
+const DEFAULT_LABELS: AdaptiveDevtoolsLabels = {
+  ariaLabel: 'Adaptive UI devtools',
+  title: 'Adaptive UI Devtools',
+  noSurfaceMounted: 'No surface mounted',
+  hide: 'Hide',
+  pin: 'Pin',
+  profile: 'Profile',
+  density: 'Density',
+  theme: 'Theme',
+  nav: 'Nav',
+  expertise: 'Expertise',
+  learnedDenseUi: 'Learned dense UI',
+  learnedCharts: 'Learned charts',
+  learnedKeyboardFlow: 'Learned keyboard flow',
+  learnedStableLayout: 'Learned stable layout',
+  controls: 'Controls',
+  freezeCurrentPlan: 'Freeze current plan',
+  unfreeze: 'Unfreeze',
+  resetDefaults: 'Reset defaults',
+  clearSimulation: 'Clear simulation',
+  simulateNovice: 'Simulate novice',
+  simulateExpert: 'Simulate expert',
+  simulateMobile: 'Simulate mobile',
+  highContrast: 'High contrast',
+  reducedMotion: 'Reduced motion',
+  simulation: 'Simulation',
+  simulationNames: {},
+  plan: 'Plan',
+  layoutMode: 'Layout mode',
+  disclosure: 'Disclosure',
+  transition: 'Transition',
+  confidence: 'Confidence',
+  cooldownZones: 'Cooldown zones',
+  none: 'none',
+  noPlanYet: 'No plan yet.',
+  zones: 'Zones',
+  score: 'score',
+  whyTrace: 'Why trace',
+  exposureLog: 'Exposure log'
+};
 
 const panelStyle: React.CSSProperties = {
   width: 360,
@@ -50,8 +134,10 @@ const buttonStyle: React.CSSProperties = {
 };
 
 export function AdaptiveDevtoolsPanel({
-  surfaceId
+  surfaceId,
+  labels: labelsProp
 }: AdaptiveDevtoolsPanelProps) {
+  const labels = { ...DEFAULT_LABELS, ...labelsProp };
   const devtools = useAdaptiveDevtools();
   const activeSurfaceId = surfaceId ?? devtools.currentSurface;
   const plan = activeSurfaceId ? devtools.plans[activeSurfaceId] : undefined;
@@ -74,7 +160,7 @@ export function AdaptiveDevtoolsPanel({
   );
 
   return (
-    <aside aria-label="Adaptive UI devtools" style={panelStyle}>
+    <aside aria-label={labels.ariaLabel} style={panelStyle}>
       <header
         style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}
       >
@@ -87,9 +173,9 @@ export function AdaptiveDevtoolsPanel({
               color: '#94a3b8'
             }}
           >
-            Adaptive UI Devtools
+            {labels.title}
           </div>
-          <strong>{activeSurfaceId ?? 'No surface mounted'}</strong>
+          <strong>{activeSurfaceId ?? labels.noSurfaceMounted}</strong>
         </div>
         <button
           onClick={() =>
@@ -98,43 +184,48 @@ export function AdaptiveDevtoolsPanel({
           style={buttonStyle}
           type="button"
         >
-          {devtools.devtoolsOpen ? 'Hide' : 'Pin'}
+          {devtools.devtoolsOpen ? labels.hide : labels.pin}
         </button>
       </header>
 
       <section style={sectionStyle}>
-        <strong>Profile</strong>
+        <strong>{labels.profile}</strong>
         <div style={{ marginTop: 8 }}>
           <span style={tagStyle}>
-            Density: {devtools.profile.explicit.density}
+            {labels.density}: {devtools.profile.explicit.density}
           </span>
-          <span style={tagStyle}>Theme: {devtools.profile.explicit.theme}</span>
-          <span style={tagStyle}>Nav: {devtools.profile.explicit.navMode}</span>
           <span style={tagStyle}>
-            Expertise: {devtools.profile.explicit.expertise}
+            {labels.theme}: {devtools.profile.explicit.theme}
+          </span>
+          <span style={tagStyle}>
+            {labels.nav}: {devtools.profile.explicit.navMode}
+          </span>
+          <span style={tagStyle}>
+            {labels.expertise}: {devtools.profile.explicit.expertise}
           </span>
         </div>
         <div style={{ marginTop: 8 }}>
           <div>
-            Learned dense UI:{' '}
+            {labels.learnedDenseUi}:{' '}
             {devtools.profile.learned.prefersDenseUI.toFixed(2)}
           </div>
           <div>
-            Learned charts: {devtools.profile.learned.prefersCharts.toFixed(2)}
+            {labels.learnedCharts}:{' '}
+            {devtools.profile.learned.prefersCharts.toFixed(2)}
           </div>
           <div>
-            Learned keyboard flow:{' '}
+            {labels.learnedKeyboardFlow}:{' '}
             {devtools.profile.learned.prefersKeyboardFlow.toFixed(2)}
           </div>
           <div>
-            Learned stable layout:{' '}
+            {labels.learnedStableLayout}:{' '}
             {devtools.profile.learned.prefersStableLayout.toFixed(2)}
           </div>
         </div>
       </section>
 
       <section style={sectionStyle}>
-        <strong>Controls</strong>
+        <strong>{labels.controls}</strong>
         <div
           style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 8 }}
         >
@@ -146,7 +237,7 @@ export function AdaptiveDevtoolsPanel({
             style={buttonStyle}
             type="button"
           >
-            Freeze current plan
+            {labels.freezeCurrentPlan}
           </button>
           <button
             onClick={() =>
@@ -156,21 +247,21 @@ export function AdaptiveDevtoolsPanel({
             style={buttonStyle}
             type="button"
           >
-            Unfreeze
+            {labels.unfreeze}
           </button>
           <button
             onClick={() => devtools.actions.resetPreferences()}
             style={buttonStyle}
             type="button"
           >
-            Reset defaults
+            {labels.resetDefaults}
           </button>
           <button
             onClick={() => devtools.actions.clearSimulation()}
             style={buttonStyle}
             type="button"
           >
-            Clear simulation
+            {labels.clearSimulation}
           </button>
         </div>
         <div
@@ -181,64 +272,79 @@ export function AdaptiveDevtoolsPanel({
             style={buttonStyle}
             type="button"
           >
-            Simulate novice
+            {labels.simulateNovice}
           </button>
           <button
             onClick={() => devtools.actions.simulateScenario('expert')}
             style={buttonStyle}
             type="button"
           >
-            Simulate expert
+            {labels.simulateExpert}
           </button>
           <button
             onClick={() => devtools.actions.simulateScenario('mobile')}
             style={buttonStyle}
             type="button"
           >
-            Simulate mobile
+            {labels.simulateMobile}
           </button>
           <button
             onClick={() => devtools.actions.simulateScenario('high-contrast')}
             style={buttonStyle}
             type="button"
           >
-            High contrast
+            {labels.highContrast}
           </button>
           <button
             onClick={() => devtools.actions.simulateScenario('reduced-motion')}
             style={buttonStyle}
             type="button"
           >
-            Reduced motion
+            {labels.reducedMotion}
           </button>
         </div>
         {devtools.simulation.label ? (
           <div style={{ marginTop: 8 }}>
-            Simulation: {devtools.simulation.label}
+            {labels.simulation}:{' '}
+            {devtools.simulation.name
+              ? (labels.simulationNames[devtools.simulation.name] ??
+                devtools.simulation.label)
+              : devtools.simulation.label}
           </div>
         ) : null}
       </section>
 
       <section style={sectionStyle}>
-        <strong>Plan</strong>
+        <strong>{labels.plan}</strong>
         {plan ? (
           <div style={{ marginTop: 8 }}>
-            <div>Layout mode: {plan.layoutMode}</div>
-            <div>Disclosure: {plan.disclosureLevel}</div>
-            <div>Transition: {plan.transitionMode}</div>
-            <div>Confidence: {plan.confidence.toFixed(2)}</div>
             <div>
-              Cooldown zones:{' '}
-              {Object.keys(plan.stability.cooldownUntil).join(', ') || 'none'}
+              {labels.layoutMode}: {plan.layoutMode}
+            </div>
+            <div>
+              {labels.disclosure}: {plan.disclosureLevel}
+            </div>
+            <div>
+              {labels.transition}: {plan.transitionMode}
+            </div>
+            <div>
+              {labels.confidence}: {plan.confidence.toFixed(2)}
+            </div>
+            <div>
+              {labels.cooldownZones}:{' '}
+              {Object.keys(plan.stability.cooldownUntil).join(', ') ||
+                labels.none}
             </div>
           </div>
         ) : (
-          <div style={{ marginTop: 8, color: '#94a3b8' }}>No plan yet.</div>
+          <div style={{ marginTop: 8, color: '#94a3b8' }}>
+            {labels.noPlanYet}
+          </div>
         )}
       </section>
 
       <section style={sectionStyle}>
-        <strong>Zones</strong>
+        <strong>{labels.zones}</strong>
         {plan
           ? Object.entries(plan.zones).map(([zoneName, zonePlan]) => (
               <div
@@ -253,8 +359,8 @@ export function AdaptiveDevtoolsPanel({
                   <strong>{zoneName}</strong>: {zonePlan.variantId}
                 </div>
                 <div style={{ color: '#94a3b8' }}>
-                  score {zonePlan.score.toFixed(2)} | confidence{' '}
-                  {zonePlan.confidence.toFixed(2)}
+                  {labels.score} {zonePlan.score.toFixed(2)} |{' '}
+                  {labels.confidence} {zonePlan.confidence.toFixed(2)}
                 </div>
                 {zonePlan.contributions.map((contribution) => (
                   <div key={contribution.id} style={{ marginTop: 4 }}>
@@ -277,7 +383,7 @@ export function AdaptiveDevtoolsPanel({
       </section>
 
       <section style={sectionStyle}>
-        <strong>Why trace</strong>
+        <strong>{labels.whyTrace}</strong>
         {why?.summary.map((line) => (
           <div key={line} style={{ marginTop: 6 }}>
             {line}
@@ -286,7 +392,7 @@ export function AdaptiveDevtoolsPanel({
       </section>
 
       <section style={sectionStyle}>
-        <strong>Exposure log</strong>
+        <strong>{labels.exposureLog}</strong>
         {devtools.events.slice(-6).map((event, index) => (
           <div key={`${event.type}-${index}`} style={{ marginTop: 6 }}>
             {event.type} {event.surfaceId ? `· ${event.surfaceId}` : ''}

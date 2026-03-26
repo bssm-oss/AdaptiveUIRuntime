@@ -29,6 +29,10 @@ Use the package to inspect:
 - blocked rules
 - stability state
 
+`AdaptiveDevtoolsPanel` and `AdaptiveDevtoolsOverlay` also accept an optional
+`labels` prop so example apps or host products can localize visible devtools
+copy without changing the planner itself.
+
 ## Package role
 
 This package is for explainability and debugging.

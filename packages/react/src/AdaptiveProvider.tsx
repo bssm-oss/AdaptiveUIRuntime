@@ -24,7 +24,8 @@ import {
 import {
   AdaptiveProviderContext,
   type AdaptiveActions,
-  type AdaptiveProviderValue
+  type AdaptiveProviderValue,
+  type AdaptiveSimulationState
 } from './context';
 
 export interface AdaptiveProviderProps {
@@ -71,7 +72,7 @@ export function AdaptiveProvider({
   );
   const [plans, setPlans] = useState<Record<string, AdaptationPlan>>({});
   const [events, setEvents] = useState<TelemetryEvent[]>([]);
-  const [simulation, setSimulation] = useState<{ label?: string }>({});
+  const [simulation, setSimulation] = useState<AdaptiveSimulationState>({});
   const [devtoolsOpen, setDevtoolsOpen] = useState(false);
   const baselineProfile = useMemo(
     () => createUserProfile(initialProfile),
@@ -224,7 +225,7 @@ export function AdaptiveProvider({
       },
       simulateScenario(name) {
         if (name === 'novice') {
-          setSimulation({ label: 'Novice manager' });
+          setSimulation({ name, label: 'Novice manager' });
           setProfile((current) =>
             createUserProfile({
               ...current,
@@ -248,7 +249,7 @@ export function AdaptiveProvider({
         }
 
         if (name === 'expert') {
-          setSimulation({ label: 'Expert analyst' });
+          setSimulation({ name, label: 'Expert analyst' });
           setProfile((current) =>
             createUserProfile({
               ...current,
@@ -272,7 +273,7 @@ export function AdaptiveProvider({
         }
 
         if (name === 'mobile') {
-          setSimulation({ label: 'Mobile quick-check' });
+          setSimulation({ name, label: 'Mobile quick-check' });
           setContext((current) =>
             mergeContextSnapshot(current, {
               viewport: { width: 390, height: 844 },
@@ -297,7 +298,7 @@ export function AdaptiveProvider({
         }
 
         if (name === 'high-contrast') {
-          setSimulation({ label: 'High contrast' });
+          setSimulation({ name, label: 'High contrast' });
           setContext((current) =>
             mergeContextSnapshot(current, {
               system: {
@@ -310,7 +311,7 @@ export function AdaptiveProvider({
           return;
         }
 
-        setSimulation({ label: 'Reduced motion' });
+        setSimulation({ name, label: 'Reduced motion' });
         setContext((current) =>
           mergeContextSnapshot(current, {
             system: {

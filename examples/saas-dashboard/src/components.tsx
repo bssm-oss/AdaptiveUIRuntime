@@ -71,16 +71,16 @@ function FakeChart({ kind = 'bar' }: { kind?: 'bar' | 'line' | 'radial' }) {
 
 function FakeTable() {
   return (
-    <div className="fake-table" aria-label="Revenue table preview">
+    <div className="fake-table" aria-label="매출 표 미리보기">
       <div className="fake-table-row fake-table-head">
-        <span>Segment</span>
+        <span>세그먼트</span>
         <span>MRR</span>
-        <span>QoQ</span>
+        <span>전분기 대비</span>
       </div>
       {[
-        ['Enterprise', '$128k', '+14%'],
-        ['Growth', '$64k', '+9%'],
-        ['Pilot', '$18k', '+23%']
+        ['엔터프라이즈', '$128k', '+14%'],
+        ['성장', '$64k', '+9%'],
+        ['파일럿', '$18k', '+23%']
       ].map(([segment, mrr, qoq]) => (
         <div className="fake-table-row" key={segment}>
           <span>{segment}</span>
@@ -94,13 +94,13 @@ function FakeTable() {
 
 export function SidebarNav({ trackBehavior }: DemoProps) {
   return (
-    <Panel title="Workspace" eyebrow="Sidebar navigation">
-      <nav aria-label="Primary">
+    <Panel title="워크스페이스" eyebrow="사이드바 탐색">
+      <nav aria-label="주요 탐색">
         <button className="nav-link nav-link-active" type="button">
-          Overview
+          개요
         </button>
         <button className="nav-link" type="button">
-          Pipelines
+          파이프라인
         </button>
         <button
           className="nav-link"
@@ -112,10 +112,10 @@ export function SidebarNav({ trackBehavior }: DemoProps) {
             })
           }
         >
-          Command center
+          명령 센터
         </button>
         <button className="nav-link" type="button">
-          Admin
+          관리
         </button>
       </nav>
     </Panel>
@@ -124,15 +124,15 @@ export function SidebarNav({ trackBehavior }: DemoProps) {
 
 export function TabsNav() {
   return (
-    <Panel title="Sections" eyebrow="Tabbed navigation">
-      <div className="tab-strip" role="tablist" aria-label="Sections">
+    <Panel title="섹션" eyebrow="탭 탐색">
+      <div className="tab-strip" role="tablist" aria-label="섹션 탭">
         <button
           className="tab-pill tab-pill-active"
           role="tab"
           aria-selected="true"
           type="button"
         >
-          Overview
+          개요
         </button>
         <button
           className="tab-pill"
@@ -140,7 +140,7 @@ export function TabsNav() {
           aria-selected="false"
           type="button"
         >
-          Revenue
+          매출
         </button>
         <button
           className="tab-pill"
@@ -148,7 +148,7 @@ export function TabsNav() {
           aria-selected="false"
           type="button"
         >
-          Activity
+          활동
         </button>
       </div>
     </Panel>
@@ -157,12 +157,12 @@ export function TabsNav() {
 
 export function BottomNav() {
   return (
-    <Panel title="Quick routes" eyebrow="Bottom navigation">
-      <nav className="bottom-nav" aria-label="Bottom navigation">
-        <button type="button">Home</button>
-        <button type="button">Stats</button>
-        <button type="button">Tasks</button>
-        <button type="button">Inbox</button>
+    <Panel title="빠른 이동" eyebrow="하단 탐색">
+      <nav className="bottom-nav" aria-label="하단 탐색">
+        <button type="button">홈</button>
+        <button type="button">지표</button>
+        <button type="button">업무</button>
+        <button type="button">받은함</button>
       </nav>
     </Panel>
   );
@@ -170,7 +170,7 @@ export function BottomNav() {
 
 export function CommandNav({ trackBehavior }: DemoProps) {
   return (
-    <Panel title="Command-first" eyebrow="Keyboard-centric navigation">
+    <Panel title="명령 중심 탐색" eyebrow="키보드 중심">
       <button
         className="command-launch"
         type="button"
@@ -182,12 +182,12 @@ export function CommandNav({ trackBehavior }: DemoProps) {
           })
         }
       >
-        Press <kbd>K</kbd> to open palette
+        <kbd>K</kbd> 로 명령 팔레트를 열기
       </button>
       <div className="command-hints">
-        <InlinePill>Jump to surface</InlinePill>
-        <InlinePill>Run quick actions</InlinePill>
-        <InlinePill>Open compare view</InlinePill>
+        <InlinePill>화면 이동</InlinePill>
+        <InlinePill>빠른 액션 실행</InlinePill>
+        <InlinePill>비교 보기 열기</InlinePill>
       </div>
     </Panel>
   );
@@ -196,20 +196,20 @@ export function CommandNav({ trackBehavior }: DemoProps) {
 export function NoviceHero() {
   return (
     <Panel
-      title="Start with the signal, not the noise"
-      eyebrow="Novice assist"
+      title="신호부터 먼저 보도록 정리된 화면"
+      eyebrow="초보자 지원"
       accent="rgba(37, 99, 235, 0.2)"
     >
       <p className="hero-copy">
-        This layout keeps weekly summary cards, guidance prompts, and the
-        primary call to action above the fold.
+        주간 요약 카드, 가이드 문구, 주요 액션을 먼저 보여줘서 복잡한 표나 세부
+        분석 전에 핵심 상황을 파악하게 합니다.
       </p>
       <div className="hero-actions">
         <button className="primary-button" type="button">
-          Review this week&apos;s blockers
+          이번 주 병목 확인
         </button>
         <button className="secondary-button" type="button">
-          Learn the dashboard
+          대시보드 익히기
         </button>
       </div>
     </Panel>
@@ -219,18 +219,18 @@ export function NoviceHero() {
 export function ExpertHero() {
   return (
     <Panel
-      title="Power surface tuned for analysis"
-      eyebrow="Expert mode"
+      title="분석 작업에 맞춘 파워 화면"
+      eyebrow="전문가 모드"
       accent="rgba(14, 165, 233, 0.18)"
     >
       <p className="hero-copy">
-        The runtime favors compact scanability, quick commands, and chart-first
-        workflows when expert and keyboard-heavy signals are strong.
+        숙련 사용자와 키보드 중심 행동 신호가 강할수록 압축 밀도, 빠른 명령,
+        차트 우선 흐름이 강화됩니다.
       </p>
       <div className="hero-stats">
-        <InlinePill>Latency 18ms</InlinePill>
-        <InlinePill>3 alerts triaged</InlinePill>
-        <InlinePill>2 workflows staged</InlinePill>
+        <InlinePill>지연 시간 18ms</InlinePill>
+        <InlinePill>경고 3건 분류</InlinePill>
+        <InlinePill>워크플로 2개 준비</InlinePill>
       </div>
     </Panel>
   );
@@ -239,17 +239,17 @@ export function ExpertHero() {
 export function MobileHero() {
   return (
     <Panel
-      title="Quick check"
-      eyebrow="Mobile summary"
+      title="모바일에서 빠르게 확인하는 화면"
+      eyebrow="모바일 요약"
       accent="rgba(56, 189, 248, 0.18)"
     >
       <p className="hero-copy">
-        Touch-friendly summary cards stay visible while secondary chrome
-        collapses into the bottom nav.
+        터치 친화적 간격과 요약 지표를 우선 노출하고, 부차적인 크롬은 하단
+        탐색으로 접어 모바일 확인 흐름을 가볍게 유지합니다.
       </p>
       <div className="hero-actions">
         <button className="primary-button" type="button">
-          Resolve approvals
+          승인 처리
         </button>
       </div>
     </Panel>
@@ -258,11 +258,11 @@ export function MobileHero() {
 
 export function SummaryCards() {
   return (
-    <Panel title="Weekly summary" eyebrow="Summary-first">
+    <Panel title="주간 요약" eyebrow="요약 우선">
       <div className="metric-grid">
-        <Metric label="Pipeline health" value="92%" delta="+3.4%" />
-        <Metric label="SLA at risk" value="4" delta="-2" />
-        <Metric label="Expansion ready" value="11" delta="+5" />
+        <Metric label="파이프라인 상태" value="92%" delta="+3.4%" />
+        <Metric label="SLA 위험" value="4" delta="-2" />
+        <Metric label="확장 준비 계정" value="11" delta="+5" />
       </div>
     </Panel>
   );
@@ -270,10 +270,10 @@ export function SummaryCards() {
 
 export function DetailedSummary({ trackBehavior }: DemoProps) {
   return (
-    <Panel title="Detailed summary" eyebrow="Detailed mode">
+    <Panel title="상세 요약" eyebrow="상세 모드">
       <div className="panel-stack">
-        <Metric label="Qualified revenue" value="$210k" delta="+18%" />
-        <Metric label="Pipeline velocity" value="26d" delta="-3d" />
+        <Metric label="확정 가능 매출" value="$210k" delta="+18%" />
+        <Metric label="파이프라인 속도" value="26일" delta="-3일" />
         <button
           className="secondary-button"
           type="button"
@@ -285,7 +285,7 @@ export function DetailedSummary({ trackBehavior }: DemoProps) {
             })
           }
         >
-          Keep detailed summary expanded
+          상세 요약을 기본으로 유지
         </button>
       </div>
     </Panel>
@@ -294,11 +294,11 @@ export function DetailedSummary({ trackBehavior }: DemoProps) {
 
 export function ProgressiveSummary({ trackBehavior }: DemoProps) {
   return (
-    <Panel title="Progressive disclosure" eyebrow="Step-by-step">
+    <Panel title="점진적 공개" eyebrow="단계별 탐색">
       <div className="panel-stack">
         <p>
-          Show the three most important numbers first, then let the user expand
-          supporting context when needed.
+          먼저 가장 중요한 세 가지 수치를 보여주고, 필요할 때만 보조 맥락과
+          설명을 확장하도록 설계된 흐름입니다.
         </p>
         <button
           className="secondary-button"
@@ -311,7 +311,7 @@ export function ProgressiveSummary({ trackBehavior }: DemoProps) {
             })
           }
         >
-          Reveal the supporting context
+          보조 맥락 펼치기
         </button>
       </div>
     </Panel>
@@ -320,7 +320,7 @@ export function ProgressiveSummary({ trackBehavior }: DemoProps) {
 
 export function TablePowerView({ trackBehavior }: DemoProps) {
   return (
-    <Panel title="Pipeline table" eyebrow="Table-first default">
+    <Panel title="파이프라인 표" eyebrow="표 우선 기본 화면">
       <FakeTable />
       <div className="toolbar-row">
         <button
@@ -334,7 +334,7 @@ export function TablePowerView({ trackBehavior }: DemoProps) {
             })
           }
         >
-          Sort by MRR
+          MRR 기준 정렬
         </button>
         <button
           className="secondary-button"
@@ -347,7 +347,7 @@ export function TablePowerView({ trackBehavior }: DemoProps) {
             })
           }
         >
-          Filter at-risk accounts
+          위험 계정만 보기
         </button>
       </div>
     </Panel>
@@ -356,7 +356,7 @@ export function TablePowerView({ trackBehavior }: DemoProps) {
 
 export function ChartPowerView({ trackBehavior }: DemoProps) {
   return (
-    <Panel title="Revenue contour" eyebrow="Chart-first default">
+    <Panel title="매출 추이" eyebrow="차트 우선 기본 화면">
       <FakeChart kind="line" />
       <div className="toolbar-row">
         <button
@@ -370,7 +370,7 @@ export function ChartPowerView({ trackBehavior }: DemoProps) {
             })
           }
         >
-          Compare cohorts
+          코호트 비교
         </button>
         <button
           className="secondary-button"
@@ -383,7 +383,7 @@ export function ChartPowerView({ trackBehavior }: DemoProps) {
             })
           }
         >
-          Drill into variance
+          변동 원인 보기
         </button>
       </div>
     </Panel>
@@ -393,15 +393,15 @@ export function ChartPowerView({ trackBehavior }: DemoProps) {
 export function CardPowerView({ trackBehavior }: DemoProps) {
   const cards = useMemo(
     () => [
-      { label: 'Escalations', value: '4', trend: 'Needs review' },
-      { label: 'Approvals', value: '8', trend: 'Queued' },
-      { label: 'Renewals', value: '12', trend: 'This week' }
+      { label: '에스컬레이션', value: '4', trend: '검토 필요' },
+      { label: '승인 대기', value: '8', trend: '대기 중' },
+      { label: '갱신 예정', value: '12', trend: '이번 주' }
     ],
     []
   );
 
   return (
-    <Panel title="Card stack" eyebrow="Card-first default">
+    <Panel title="카드 스택" eyebrow="카드 우선 기본 화면">
       <div className="metric-grid">
         {cards.map((card) => (
           <Metric
@@ -423,7 +423,7 @@ export function CardPowerView({ trackBehavior }: DemoProps) {
           })
         }
       >
-        Refresh cards
+        카드 새로고침
       </button>
     </Panel>
   );
@@ -431,11 +431,11 @@ export function CardPowerView({ trackBehavior }: DemoProps) {
 
 export function OnboardingRail() {
   return (
-    <Panel title="Guided next steps" eyebrow="Onboarding rail">
+    <Panel title="다음 단계 가이드" eyebrow="온보딩 패널">
       <ol className="step-list">
-        <li>Review summary cards before opening the full pipeline.</li>
-        <li>Use quick actions for common approval tasks.</li>
-        <li>Reset to defaults if the layout feels unfamiliar.</li>
+        <li>상세 표를 열기 전에 먼저 요약 카드로 전체 상황을 확인합니다.</li>
+        <li>반복 작업은 빠른 액션에서 먼저 처리합니다.</li>
+        <li>레이아웃이 낯설면 언제든 기본값으로 초기화할 수 있습니다.</li>
       </ol>
     </Panel>
   );
@@ -443,15 +443,15 @@ export function OnboardingRail() {
 
 export function InsightsRail({ trackBehavior }: DemoProps) {
   return (
-    <Panel title="Analyst insights" eyebrow="Support rail">
+    <Panel title="분석 인사이트" eyebrow="보조 패널">
       <div className="panel-stack">
         <div className="insight-card">
-          <strong>ARR mix</strong>
-          <span>Enterprise share is climbing faster than forecast.</span>
+          <strong>ARR 구성</strong>
+          <span>엔터프라이즈 비중이 예상보다 빠르게 올라가고 있습니다.</span>
         </div>
         <div className="insight-card">
-          <strong>Watchlist</strong>
-          <span>APAC renewals still need manual intervention.</span>
+          <strong>주의 목록</strong>
+          <span>APAC 갱신은 아직 수동 확인이 필요합니다.</span>
         </div>
         <button
           className="secondary-button"
@@ -465,7 +465,7 @@ export function InsightsRail({ trackBehavior }: DemoProps) {
             })
           }
         >
-          Collapse rail
+          패널 접기
         </button>
       </div>
     </Panel>
@@ -474,7 +474,7 @@ export function InsightsRail({ trackBehavior }: DemoProps) {
 
 export function CollapsedRail({ trackBehavior }: DemoProps) {
   return (
-    <Panel title="Rail collapsed" eyebrow="Stable layout guard">
+    <Panel title="패널이 접힌 상태" eyebrow="안정성 가드">
       <button
         className="secondary-button"
         type="button"
@@ -487,7 +487,7 @@ export function CollapsedRail({ trackBehavior }: DemoProps) {
           })
         }
       >
-        Expand support rail
+        보조 패널 펼치기
       </button>
     </Panel>
   );
@@ -495,7 +495,7 @@ export function CollapsedRail({ trackBehavior }: DemoProps) {
 
 export function ProminentActions({ trackBehavior }: DemoProps) {
   return (
-    <Panel title="Quick actions" eyebrow="Primary CTA prominence">
+    <Panel title="빠른 액션" eyebrow="주요 CTA 강조">
       <div className="action-grid">
         <button
           className="primary-button"
@@ -508,7 +508,7 @@ export function ProminentActions({ trackBehavior }: DemoProps) {
             })
           }
         >
-          Approve requests
+          요청 승인
         </button>
         <button
           className="secondary-button"
@@ -521,7 +521,7 @@ export function ProminentActions({ trackBehavior }: DemoProps) {
             })
           }
         >
-          Export weekly brief
+          주간 브리프 내보내기
         </button>
       </div>
     </Panel>
@@ -530,13 +530,13 @@ export function ProminentActions({ trackBehavior }: DemoProps) {
 
 export function MinimalActions() {
   return (
-    <Panel title="Quick actions" eyebrow="Minimal emphasis">
+    <Panel title="빠른 액션" eyebrow="최소 강조">
       <div className="action-grid">
         <button className="secondary-button" type="button">
-          Export
+          내보내기
         </button>
         <button className="secondary-button" type="button">
-          Assign
+          담당 지정
         </button>
       </div>
     </Panel>
@@ -545,7 +545,7 @@ export function MinimalActions() {
 
 export function KeyboardActions({ trackBehavior }: DemoProps) {
   return (
-    <Panel title="Keyboard actions" eyebrow="Command heavy">
+    <Panel title="키보드 액션" eyebrow="명령 중심">
       <div className="panel-stack">
         <button
           className="primary-button"
@@ -558,10 +558,10 @@ export function KeyboardActions({ trackBehavior }: DemoProps) {
             })
           }
         >
-          Trigger staged macro
+          매크로 실행
         </button>
         <div className="command-hints">
-          <InlinePill>G then P</InlinePill>
+          <InlinePill>G 다음 P</InlinePill>
           <InlinePill>Shift /</InlinePill>
           <InlinePill>Ctrl .</InlinePill>
         </div>

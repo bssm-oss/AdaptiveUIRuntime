@@ -13,6 +13,7 @@
   "dependencies": {
     "@adaptive-ui/core": "workspace:*",
     "@adaptive-ui/devtools": "workspace:*",
+    "@adaptive-ui/llm": "workspace:*",
     "@adaptive-ui/react": "workspace:*",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
