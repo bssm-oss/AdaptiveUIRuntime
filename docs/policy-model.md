@@ -1,5 +1,8 @@
 # Policy Model
 
+> This document is bilingual. English content comes first, and a Korean summary appears later in the file.
+> 이 문서는 영어와 한국어를 함께 제공합니다. 영어 본문이 먼저 나오고, 뒤쪽에 한국어 요약이 이어집니다.
+
 This document defines how the runtime makes decisions, how conflicts are resolved, and how stability is preserved.
 
 ## Decision Hierarchy
@@ -228,3 +231,107 @@ When adding a rule, ask:
 5. Could it harm accessibility or discoverability?
 
 If the answer to the last question is yes, the rule should likely be blocked or demoted.
+
+## 한국어 요약
+
+### 결정 우선순위
+
+이 런타임은 충돌이 생기면 아래 순서로 해결합니다.
+
+1. hard safety / accessibility constraint
+2. explicit user preference
+3. account 또는 organization policy
+4. persisted learned preference
+5. session heuristic
+6. default
+
+이 순서는 반드시 유지되어야 합니다.
+그렇지 않으면 personalization이 사용자 의도와 안전 제약을 덮어쓰게 됩니다.
+
+### hard constraint
+
+hard constraint는 scoring으로 뒤집을 수 없는 규칙입니다.
+예를 들어 reduced motion, contrast safety, 필수 UI 유지, focus stability 같은 항목이 여기에 속합니다.
+
+### explicit preference
+
+explicit preference는 사용자가 직접 선택한 값입니다.
+theme, density, nav mode, default view 같은 항목은 learned score보다 항상 우선합니다.
+
+### account / org policy
+
+조직 정책은 제품 전체에서 허용하지 않는 UI 상태를 제한할 수 있습니다.
+예를 들어 어떤 navigation mode를 금지하거나 compliance 상 필수 패널을 항상 노출하도록 강제할 수 있습니다.
+
+### learned preference
+
+learned preference는 deterministic heuristic 결과입니다.
+신호는 수치형으로 저장되지만, explicit 설정이 있는 축은 건드리면 안 됩니다.
+또한 신호가 약한 상태에서 큰 구조 변화를 일으키면 안 됩니다.
+
+### session heuristic
+
+session heuristic은 현재 세션에서 관찰한 behavior를 반영합니다.
+다만 persisted learned preference보다 더 아래에 두어야 세션 내 작은 잡음 때문에 UI가 흔들리지 않습니다.
+
+### defaults
+
+기본값은 마지막 fallback입니다.
+적응 신호가 부족하거나 정책상 바꾸기 애매할 때는 default variant가 남는 것이 맞습니다.
+
+### scoring 의미론
+
+score는 rule-based weighted contribution으로 계산합니다.
+중요한 점은 score 숫자 자체보다도 “왜 그 점수가 나왔는지”가 함께 남아야 한다는 것입니다.
+그래서 zone별 contribution trace가 필요합니다.
+
+### stability 의미론
+
+stability는 personalization 품질의 핵심입니다.
+현재 모델에서 중요한 장치는 다음과 같습니다.
+
+- hysteresis
+- cooldown
+- low-confidence no-op
+- manual freeze / lock
+
+이 장치가 없으면 사용자가 매 상호작용마다 다른 화면을 보게 됩니다.
+
+### navigation이 더 보수적이어야 하는 이유
+
+navigation 패턴은 density보다 훨씬 무거운 변화입니다.
+sidebar, tabs, command-first 같은 구조 변경은 muscle memory와 task routing에 영향을 주므로 같은 세션 안에서는 매우 신중해야 합니다.
+
+### manual lock
+
+사용자가 lock한 값은 자동 변경 대상이 아닙니다.
+manual override의 존재 이유 자체가 “이 축은 내가 정한다”는 의도를 명시하기 위함이기 때문입니다.
+
+### explainability 계약
+
+정책 모델은 결과만 맞으면 되는 것이 아니라, 왜 그런 결과가 나왔는지 개발자와 제품팀이 설명할 수 있어야 합니다.
+따라서 최소한 다음 정보는 남아야 합니다.
+
+- 어떤 source가 이긴 결정인지
+- 어떤 rule이 적용됐는지
+- 어떤 후보가 막혔는지
+- stability가 결과를 유지시켰는지
+
+### 위험한 적응 패턴
+
+다음은 피해야 합니다.
+
+- 낮은 사용 빈도를 근거로 핵심 기능을 숨김
+- 법적 또는 정책상 필요한 UI를 제거함
+- 설명할 수 없는 black-box 조작
+- accessibility 손상을 감수한 optimization
+
+### 새 rule을 추가할 때 질문할 것
+
+새로운 rule을 추가할 때는 다음을 먼저 확인해야 합니다.
+
+1. hard constraint인가, score contribution인가
+2. plain language로 설명 가능한가
+3. 세션 내에서 안정적으로 유지되는가
+4. explicit 설정과 충돌하지 않는가
+5. 접근성이나 discoverability를 해치지 않는가
