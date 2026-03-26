@@ -90,6 +90,7 @@ The smoke test imports the built workspace packages:
 
 - `@adaptive-ui/core`
 - `@adaptive-ui/react`
+- `@adaptive-ui/llm`
 
 Then it:
 
@@ -98,6 +99,7 @@ Then it:
 - renders through `react-dom/server`
 - verifies explicit preference behavior
 - verifies learned behavior promotion after repeated interactions
+- verifies that a natural-language request can be compiled and safely applied through `@adaptive-ui/llm`
 
 ### Why this package must not alias to `src/*`
 
@@ -110,11 +112,12 @@ For that reason, the `tests/usage` workspace is configured to consume the built 
 
 ### Current smoke flow
 
-The current smoke scenario proves three concrete states:
+The current smoke scenario proves four concrete states:
 
 1. Initial profile renders `summaryCards`.
 2. Explicit `defaultView = chart` renders `chartBoard`.
 3. Repeated `chart_interaction` events raise the learned chart preference enough for `chartBoard` to win again when the explicit override is removed.
+4. A natural-language request is compiled into a validated recommendation and applied as safe runtime updates.
 
 ### Run it
 
@@ -207,11 +210,12 @@ React 테스트는 provider bootstrap, slot rendering, manual override, hydratio
 `tests/usage`는 실제 다운스트림 앱처럼 built package를 import합니다.
 이 레이어가 중요한 이유는 monorepo 내부 alias 경로가 아니라, 실제 배포 계약이 맞는지 확인하기 위해서입니다.
 
-현재 smoke test는 다음 세 상태를 검증합니다.
+현재 smoke test는 다음 네 상태를 검증합니다.
 
 1. 초기 상태에서 `summaryCards`
 2. explicit override 후 `chartBoard`
 3. 반복 chart interaction 후 learned preference로 다시 `chartBoard`
+4. 자연어 요청을 `@adaptive-ui/llm`으로 recommendation으로 바꾸고 safe update로 즉시 적용
 
 실행은 아래처럼 합니다.
 
