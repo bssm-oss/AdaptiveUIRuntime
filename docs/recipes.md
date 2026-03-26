@@ -136,6 +136,67 @@ This is useful in:
 - design reviews
 - experimentation analysis
 
+## Accept Natural-Language Screen Requests Safely
+
+Use `@adaptive-ui/llm` when users or operators should be able to ask for the screen they want in plain language.
+
+```ts
+import {
+  applyAdaptiveIntentRecommendation,
+  createHeuristicAdaptiveIntentCompiler
+} from '@adaptive-ui/llm';
+
+const compiler = createHeuristicAdaptiveIntentCompiler();
+
+const recommendation = await compiler.compile({
+  surface,
+  userRequest: 'Show charts first and let me move quickly with the keyboard.',
+  userProfile,
+  context,
+  currentPlan,
+  language: 'en-US'
+});
+
+applyAdaptiveIntentRecommendation(recommendation, {
+  currentContext: context,
+  updateExplicitPreference,
+  patchContext
+});
+```
+
+Important rules:
+
+- compile intent into recommendations, not DOM
+- keep the runtime as the final enforcement layer
+- stay inside declared zones and variants
+- keep explicit user settings higher priority than model suggestions
+
+## Add A Server-Side OpenAI Intent Layer
+
+Use the OpenAI transport on the server:
+
+```ts
+import { createOpenAIAdaptiveIntentCompiler } from '@adaptive-ui/llm/openai';
+
+const compiler = createOpenAIAdaptiveIntentCompiler({
+  apiKey: process.env.OPENAI_API_KEY,
+  model: 'gpt-5.4',
+  reasoningEffort: 'medium'
+});
+```
+
+Recommended placement:
+
+- route handler
+- server action
+- edge function
+
+Avoid using this in:
+
+- first paint
+- hydration-critical logic
+- browser-side secret-bearing code
+
 ## Validate As A Real Consumer
 
 This repository includes a consumer-style smoke package in `tests/usage`.
@@ -164,6 +225,7 @@ The current smoke scenario covers:
 1. summary-first rendering from an explicit profile
 2. chart-first rendering after an explicit override
 3. chart-first rendering after repeated chart interaction updates the learned profile
+4. natural-language intent compilation and safe recommendation application through `@adaptive-ui/llm`
 
 ## Use The Runtime On The Server
 
@@ -218,6 +280,20 @@ These presets are intended for:
 - design review
 - demos
 
+## Demo The Product To Stakeholders
+
+Recommended short sequence:
+
+1. show novice, expert, and mobile simulation on the same dashboard
+2. change explicit theme or density settings
+3. use the natural-language intent input
+4. open devtools and show the why trace
+
+The key sentence to repeat is:
+
+- the screen can change immediately
+- but the system still stays inside approved variants and explainable rules
+
 ## Migrate From One Static Surface To Adaptive Surface
 
 Recommended sequence:
@@ -263,6 +339,22 @@ behavior는 DOM 이벤트를 그대로 저장하는 대신, 의미 있는 aggreg
 devtools overlay는 개발, QA, 디자인 리뷰, 실험 분석에 특히 유용합니다.
 현재 plan, selected variant, frozen state, score breakdown, simulation preset을 빠르게 확인할 수 있습니다.
 
+### 자연어 화면 요청을 안전하게 받기
+
+`@adaptive-ui/llm`을 쓰면 사용자가 원하는 화면을 자연어로 요청하고, 그 요청을 safe recommendation으로 바꿔 runtime에 즉시 적용할 수 있습니다.
+
+핵심 원칙은 아래와 같습니다.
+
+- 자연어를 DOM이 아니라 recommendation으로 변환
+- runtime이 마지막 enforcement layer 역할 유지
+- declared zone과 variant 밖으로 나가지 않기
+- explicit user setting이 모델 추천보다 우선
+
+### 서버에서 OpenAI intent layer 붙이기
+
+실제 모델 해석이 필요하면 `@adaptive-ui/llm/openai`를 route handler, server action, edge function 같은 서버 위치에 두는 것이 좋습니다.
+첫 렌더나 hydration 핵심 경로에 두는 것은 피해야 합니다.
+
 ### 실제 소비자처럼 검증하기
 
 `tests/usage`는 monorepo 내부 테스트와 다르게 built package entrypoint를 실제 소비자처럼 불러옵니다.
@@ -273,6 +365,13 @@ devtools overlay는 개발, QA, 디자인 리뷰, 실험 분석에 특히 유용
 ```bash
 ./run usage
 ```
+
+현재 smoke 시나리오는 아래를 확인합니다.
+
+1. explicit profile 기반 summary-first 렌더
+2. explicit override 이후 chart-first 렌더
+3. learned preference 누적으로 chart-first 재선택
+4. `@adaptive-ui/llm`을 통한 자연어 recommendation 생성과 적용
 
 ### 서버에서 사용하기
 
@@ -288,6 +387,17 @@ OTel 브리지를 붙이면 adaptive runtime event를 기존 telemetry 파이프
 
 novice, expert, mobile, high-contrast, reduced-motion 같은 preset을 개발 중 바로 시뮬레이션하면 QA가 빨라집니다.
 이 기능은 “같은 앱이 사용자별로 어떻게 달라지는지”를 설명하는 데도 유용합니다.
+
+### 제품 시연 순서
+
+짧은 시연에서는 아래 순서가 가장 전달력이 좋습니다.
+
+1. novice, expert, mobile simulation
+2. theme와 density explicit override
+3. 자연어 화면 요청 입력
+4. devtools에서 why trace 확인
+
+핵심 메시지는 “즉시 바뀌지만 자유 생성은 아니고, 승인된 variant 안에서만 재계획한다”입니다.
 
 ### 정적 화면에서 adaptive surface로 옮기는 순서
 
