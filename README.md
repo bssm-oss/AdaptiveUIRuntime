@@ -719,6 +719,7 @@ PATH=/opt/homebrew/bin:/usr/bin:/bin:$PATH pnpm bench
 
 ## Documentation Map
 
+- [Agent Instructions](./AGENTS.md)
 - [Documentation Index](./docs/README.md)
 - [Getting Started](./docs/getting-started.md)
 - [Contributing](./CONTRIBUTING.md)
@@ -750,6 +751,10 @@ PATH=/opt/homebrew/bin:/usr/bin:/bin:$PATH pnpm bench
 - [Adoption Playbook](./docs/adoption-playbook.md)
 - [Security And Trust Boundaries](./docs/security-and-trust-boundaries.md)
 - [Devtools Guide](./docs/devtools.md)
+- [Agent Guide](./docs/agent-guide.md)
+- [Change Playbook](./docs/change-playbook.md)
+- [Review Standards](./docs/review-standards.md)
+- [Maintainer Checklist](./docs/maintainer-checklist.md)
 - [Telemetry Guide](./docs/telemetry.md)
 - [Experimentation Guide](./docs/experimentation.md)
 - [Design System Integration](./docs/design-system-integration.md)
@@ -1114,6 +1119,7 @@ Core API 예시는 다음과 같습니다.
 
 세부 문서는 아래 파일을 보면 됩니다.
 
+- [Agent Instructions](./AGENTS.md)
 - [Documentation Index](./docs/README.md)
 - [Getting Started](./docs/getting-started.md)
 - [Contributing](./CONTRIBUTING.md)
@@ -1145,6 +1151,10 @@ Core API 예시는 다음과 같습니다.
 - [Adoption Playbook](./docs/adoption-playbook.md)
 - [Security And Trust Boundaries](./docs/security-and-trust-boundaries.md)
 - [Devtools Guide](./docs/devtools.md)
+- [Agent Guide](./docs/agent-guide.md)
+- [Change Playbook](./docs/change-playbook.md)
+- [Review Standards](./docs/review-standards.md)
+- [Maintainer Checklist](./docs/maintainer-checklist.md)
 - [Telemetry Guide](./docs/telemetry.md)
 - [Experimentation Guide](./docs/experimentation.md)
 - [Design System Integration](./docs/design-system-integration.md)
