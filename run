@@ -1,0 +1,154 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+ROOT_DIR="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+export PATH="/opt/homebrew/bin:/usr/bin:/bin:${PATH}"
+
+cd "$ROOT_DIR"
+
+ensure_pnpm() {
+  if ! command -v pnpm >/dev/null 2>&1; then
+    echo "pnpm is required but was not found on PATH." >&2
+    exit 1
+  fi
+}
+
+ensure_install() {
+  if [ ! -d node_modules ]; then
+    echo "node_modules not found. Running pnpm install first..."
+    pnpm install
+  fi
+}
+
+run_step() {
+  printf '\n==> %s\n' "$1"
+  shift
+  "$@"
+}
+
+run_pnpm_script() {
+  local script_name="$1"
+  shift
+
+  if [ "$#" -gt 0 ]; then
+    pnpm "$script_name" -- "$@"
+  else
+    pnpm "$script_name"
+  fi
+}
+
+run_filtered_script() {
+  local filter_name="$1"
+  local script_name="$2"
+  shift 2
+
+  if [ "$#" -gt 0 ]; then
+    pnpm --filter "$filter_name" "$script_name" -- "$@"
+  else
+    pnpm --filter "$filter_name" "$script_name"
+  fi
+}
+
+show_help() {
+  cat <<'EOF'
+Usage:
+  ./run install
+  ./run dev [-- vite-args...]
+  ./run preview [-- vite-preview-args...]
+  ./run lint
+  ./run typecheck
+  ./run test
+  ./run build
+  ./run usage
+  ./run e2e [-- playwright-args...]
+  ./run bench
+  ./run check
+  ./run all
+
+Commands:
+  install    Run pnpm install.
+  dev        Start the SaaS dashboard example.
+  preview    Preview the built SaaS dashboard example.
+  lint       Run ESLint and Prettier checks.
+  typecheck  Run workspace TypeScript checks.
+  test       Run Vitest unit and integration tests.
+  build      Build all workspace packages and the example app.
+  usage      Run the consumer-style smoke test.
+  e2e        Run Playwright tests for the example app.
+  bench      Run the resolvePlan micro-benchmark.
+  check      Run lint, typecheck, test, and build in sequence.
+  all        Run check, usage, and e2e in sequence.
+EOF
+}
+
+ensure_pnpm
+
+command_name="${1:-help}"
+if [ "$#" -gt 0 ]; then
+  shift
+fi
+
+case "$command_name" in
+  install | setup)
+    pnpm install
+    ;;
+  help | -h | --help)
+    show_help
+    ;;
+  dev)
+    ensure_install
+    run_filtered_script ./examples/saas-dashboard dev "$@"
+    ;;
+  preview)
+    ensure_install
+    pnpm --filter ./examples/saas-dashboard exec vite preview "$@"
+    ;;
+  lint)
+    ensure_install
+    pnpm lint
+    ;;
+  typecheck)
+    ensure_install
+    pnpm typecheck
+    ;;
+  test)
+    ensure_install
+    pnpm test
+    ;;
+  build)
+    ensure_install
+    pnpm build
+    ;;
+  usage | smoke)
+    ensure_install
+    pnpm test:usage
+    ;;
+  e2e)
+    ensure_install
+    run_filtered_script ./examples/saas-dashboard test:e2e "$@"
+    ;;
+  bench)
+    ensure_install
+    pnpm bench
+    ;;
+  check)
+    ensure_install
+    run_step "lint" pnpm lint
+    run_step "typecheck" pnpm typecheck
+    run_step "test" pnpm test
+    run_step "build" pnpm build
+    ;;
+  all)
+    ensure_install
+    run_step "check" "$ROOT_DIR/run" check
+    run_step "usage" pnpm test:usage
+    run_step "e2e" pnpm --filter ./examples/saas-dashboard test:e2e
+    ;;
+  *)
+    echo "Unknown command: $command_name" >&2
+    echo >&2
+    show_help
+    exit 1
+    ;;
+esac

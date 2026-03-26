@@ -1,10 +1,26 @@
 {
   "name": "@adaptive-ui/devtools",
+  "description": "Devtools overlay and panel for inspecting adaptive UI plans.",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bssm-oss/GenerativeUI.git",
+    "directory": "packages/devtools"
+  },
+  "homepage": "https://github.com/bssm-oss/GenerativeUI#readme",
+  "bugs": {
+    "url": "https://github.com/bssm-oss/GenerativeUI/issues"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -13,6 +29,12 @@
     }
   },
   "sideEffects": false,
+  "keywords": [
+    "adaptive-ui",
+    "react",
+    "devtools",
+    "personalization"
+  ],
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",
     "react-dom": "^18.2.0 || ^19.0.0"

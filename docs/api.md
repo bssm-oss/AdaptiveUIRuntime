@@ -1,5 +1,8 @@
 # API Reference
 
+> This document is bilingual. English content comes first, and a Korean summary appears later in the file.
+> 이 문서는 영어와 한국어를 함께 제공합니다. 영어 본문이 먼저 나오고, 뒤쪽에 한국어 요약이 이어집니다.
+
 This document summarizes the public API exposed by the current implementation.
 
 ## Core Package: `@adaptive-ui/core`
@@ -215,3 +218,76 @@ Returned adapter supports:
 
 - `emit(event)`
 - `shutdown()`
+
+## 한국어 요약
+
+### core 패키지
+
+`@adaptive-ui/core`는 실제 의사결정을 담당하는 중심 패키지입니다.
+대표 API는 다음과 같습니다.
+
+- `createAdaptiveEngine(config?)`
+- `defineSurface(schema)`
+- `resolvePlan(input)`
+- `applyPlan(plan, target?)`
+- `updateExplicitPreference(profile, key, value)`
+- `serializeProfile(profile)`
+- `hydrateProfile(data)`
+- `createBootstrapContext(partial)`
+
+`createAdaptiveEngine`는 profile, behavior, storage, telemetry, surface registry를 관리하는 stateful runtime을 만듭니다.
+반면 `resolvePlan`은 특정 입력으로부터 deterministic `AdaptationPlan`을 계산하는 pure entrypoint입니다.
+
+### plan 관련 핵심 타입
+
+실제로 자주 보게 되는 타입은 다음입니다.
+
+- `UserProfile`
+- `ContextSnapshot`
+- `BehaviorSummary`
+- `SurfaceSchema`
+- `AdaptationPlan`
+- `StorageAdapter`
+- `TelemetryAdapter`
+- `ExperimentAdapter`
+- `SelectionStrategy`
+
+`AdaptationPlan`은 zone별 variant 선택, token override, reasoning trace, confidence, stability metadata를 포함합니다.
+
+### React 패키지
+
+`@adaptive-ui/react`는 core 위에 얇게 얹는 adapter입니다.
+대표 구성요소는 다음과 같습니다.
+
+- `AdaptiveProvider`
+- `AdaptiveSurface`
+- `AdaptiveSlot`
+- hooks: `useAdaptivePlan`, `useAdaptivePreference`, `useAdaptiveActions`, `useAdaptiveWhy`, `useAdaptiveDevtools`
+
+`AdaptiveProvider`는 engine, profile, behavior, context, devtools state를 제공합니다.
+`AdaptiveSurface`는 주어진 schema로 plan을 계산하고 렌더 컨텍스트를 만듭니다.
+`AdaptiveSlot`은 현재 plan에 맞는 등록된 component variant를 렌더합니다.
+
+### Devtools 패키지
+
+`@adaptive-ui/devtools`는 현재 선택된 plan과 why trace를 시각적으로 확인하는 용도입니다.
+주요 컴포넌트는 다음 두 가지입니다.
+
+- `AdaptiveDevtoolsPanel`
+- `AdaptiveDevtoolsOverlay`
+
+panel은 직접 배치할 때 쓰고, overlay는 화면 위에 떠 있는 도구 형태로 빠르게 붙일 때 적합합니다.
+
+### OTel 패키지
+
+`@adaptive-ui/otel`의 `createOpenTelemetryAdapter(config?)`는 core telemetry event를 OpenTelemetry exporter로 연결합니다.
+
+주요 설정값은 다음과 같습니다.
+
+- `serviceName`
+- `traceUrl`
+- `metricsUrl`
+- `headers`
+- `exportIntervalMillis`
+
+반환된 adapter는 최소한 `emit(event)`와 `shutdown()`을 지원합니다.
