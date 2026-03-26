@@ -4,11 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "smoke": "tsx smoke.tsx",
-    "typecheck": "tsc --project tsconfig.json --noEmit"
+    "smoke": "tsx smoke.tsx && tsx llm-smoke.ts",
+    "typecheck": "pnpm -C ../.. --filter @adaptive-ui/core --filter @adaptive-ui/react --filter @adaptive-ui/llm build && tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
     "@adaptive-ui/core": "workspace:*",
+    "@adaptive-ui/llm": "workspace:*",
     "@adaptive-ui/react": "workspace:*",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"

@@ -5,5 +5,5 @@
     "types": ["node"],
     "paths": {}
   },
-  "include": ["smoke.tsx"]
+  "include": ["smoke.tsx", "llm-smoke.ts"]
 }
