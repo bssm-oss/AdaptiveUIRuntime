@@ -1,10 +1,26 @@
 {
   "name": "@adaptive-ui/otel",
+  "description": "OpenTelemetry bridge for adaptive UI runtime telemetry.",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bssm-oss/GenerativeUI.git",
+    "directory": "packages/otel"
+  },
+  "homepage": "https://github.com/bssm-oss/GenerativeUI#readme",
+  "bugs": {
+    "url": "https://github.com/bssm-oss/GenerativeUI/issues"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -13,6 +29,12 @@
     }
   },
   "sideEffects": false,
+  "keywords": [
+    "adaptive-ui",
+    "opentelemetry",
+    "telemetry",
+    "personalization"
+  ],
   "dependencies": {
     "@adaptive-ui/core": "workspace:*",
     "@opentelemetry/api": "^1.9.0",
