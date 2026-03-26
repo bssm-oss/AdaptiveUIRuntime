@@ -1,0 +1,16 @@
+{
+  "name": "@adaptive-ui/usage-smoke",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "smoke": "tsx smoke.tsx",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@adaptive-ui/core": "workspace:*",
+    "@adaptive-ui/react": "workspace:*",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}

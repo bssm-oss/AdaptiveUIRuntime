@@ -1,0 +1,20 @@
+{
+  "name": "@adaptive-ui/saas-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --project tsconfig.json --noEmit && vite build",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "test:e2e": "playwright test --config ../../playwright.config.ts"
+  },
+  "dependencies": {
+    "@adaptive-ui/core": "workspace:*",
+    "@adaptive-ui/devtools": "workspace:*",
+    "@adaptive-ui/react": "workspace:*",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}
