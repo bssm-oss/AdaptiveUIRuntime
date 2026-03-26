@@ -72,6 +72,13 @@ When possible, split work into small commits that reflect:
 This repository is documented in both English and Korean.
 When adding or editing user-facing docs, keep the bilingual structure intact.
 
+For agent or automation-specific guidance, read:
+
+- `AGENTS.md`
+- `docs/agent-guide.md`
+- `docs/change-playbook.md`
+- `docs/review-standards.md`
+
 ## 한국어 요약
 
 Adaptive UI Runtime에 기여할 때는 다음 원칙을 우선합니다.
