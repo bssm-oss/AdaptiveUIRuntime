@@ -47,6 +47,7 @@ If you are new to the repository, read in this order:
 
 - `docs/testing.md`
 - `docs/qa-checklist.md`
+- `docs/maintainer-checklist.md`
 - `docs/performance.md`
 - `docs/browser-support.md`
 - `docs/troubleshooting.md`
@@ -62,6 +63,9 @@ If you are new to the repository, read in this order:
 - `docs/example-walkthrough.md`
 - `docs/experimentation.md`
 - `docs/security-and-trust-boundaries.md`
+- `docs/agent-guide.md`
+- `docs/change-playbook.md`
+- `docs/review-standards.md`
 
 ## By Package
 
@@ -89,7 +93,12 @@ If you are new to the repository, read in this order:
 ### Library maintainers
 
 - `CONTRIBUTING.md`
+- `AGENTS.md`
 - `docs/contributing.md`
+- `docs/agent-guide.md`
+- `docs/change-playbook.md`
+- `docs/review-standards.md`
+- `docs/maintainer-checklist.md`
 - `docs/release-process.md`
 - `docs/versioning-and-migrations.md`
 
@@ -111,3 +120,4 @@ If you are new to the repository, read in this order:
 - 실제 통합: `react-integration`, `nextjs`, `storage-and-privacy`, `design-system-integration`
 - surface와 rule 작성: `surface-schema`, `surface-authoring`, `rule-authoring`, `anti-patterns`
 - 운영과 배포: `testing`, `qa-checklist`, `performance`, `troubleshooting`, `publishing`, `release-process`
+- 유지보수와 에이전트 작업: `AGENTS.md`, `agent-guide`, `change-playbook`, `review-standards`, `maintainer-checklist`
