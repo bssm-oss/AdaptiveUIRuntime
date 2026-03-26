@@ -31,6 +31,7 @@ If you are new to the repository, read in this order:
 ### Integrate the runtime
 
 - `docs/react-integration.md`
+- `docs/llm-integration.md`
 - `docs/frameworks/nextjs.md`
 - `docs/storage-and-privacy.md`
 - `docs/design-system-integration.md`
@@ -70,6 +71,7 @@ If you are new to the repository, read in this order:
 ## By Package
 
 - `packages/core/README.md`
+- `packages/llm/README.md`
 - `packages/react/README.md`
 - `packages/devtools/README.md`
 - `packages/otel/README.md`
@@ -117,7 +119,7 @@ If you are new to the repository, read in this order:
 목적별 추천은 다음과 같습니다.
 
 - 제품 모델 이해: `user-profile`, `context-model`, `adaptation-plan`, `stability-model`
-- 실제 통합: `react-integration`, `nextjs`, `storage-and-privacy`, `design-system-integration`
+- 실제 통합: `react-integration`, `llm-integration`, `nextjs`, `storage-and-privacy`, `design-system-integration`
 - surface와 rule 작성: `surface-schema`, `surface-authoring`, `rule-authoring`, `anti-patterns`
 - 운영과 배포: `testing`, `qa-checklist`, `performance`, `troubleshooting`, `publishing`, `release-process`
 - 유지보수와 에이전트 작업: `AGENTS.md`, `agent-guide`, `change-playbook`, `review-standards`, `maintainer-checklist`

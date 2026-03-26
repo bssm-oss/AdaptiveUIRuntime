@@ -29,6 +29,7 @@ Instead, it resolves an `AdaptationPlan` for a known product surface and uses th
 - [Runtime Pipeline](#runtime-pipeline)
 - [Design System Integration](#design-system-integration)
 - [React Integration](#react-integration)
+- [Intent-Driven Adaptation With @adaptive-ui/llm](#intent-driven-adaptation-with-adaptive-uillm)
 - [SSR And Hydration](#ssr-and-hydration)
 - [Browser API Usage](#browser-api-usage)
 - [Privacy And Storage](#privacy-and-storage)
@@ -197,6 +198,8 @@ Surface Schema + User Profile + Context Snapshot + Behavior Summary
   Panel and overlay for inspecting active plans, scores, rule contributions, simulations, and freeze state.
 - `@adaptive-ui/otel`
   Vendor-neutral telemetry bridge that exports runtime telemetry through OpenTelemetry OTLP HTTP exporters.
+- `@adaptive-ui/llm`
+  Intent compiler layer that turns user requests into safe adaptive recommendations and validated preference updates.
 - `examples/saas-dashboard`
   Example Vite React app demonstrating constrained adaptation with three personas.
 
@@ -211,6 +214,7 @@ Optional packages:
 ```bash
 pnpm add @adaptive-ui/devtools
 pnpm add @adaptive-ui/otel
+pnpm add @adaptive-ui/llm
 ```
 
 For local development in this repository, the shell currently needs `/opt/homebrew/bin` on `PATH`:
@@ -529,6 +533,81 @@ The intended pattern is:
 4. render registered variants through slots
 5. keep business logic in the host app, not inside the adaptive runtime
 
+## Intent-Driven Adaptation With @adaptive-ui/llm
+
+`@adaptive-ui/llm` is the intent compiler layer for products that want users or operators to describe the screen they want in natural language.
+
+It does not turn prompts into raw DOM.
+Instead, it compiles natural-language intent into a safe recommendation object:
+
+- explicit preference updates
+- bounded context patches
+- approved variant hints
+- user-facing explanation text
+
+Recommended flow:
+
+```text
+Natural-language request
+  -> @adaptive-ui/llm compiler
+  -> validation and sanitization
+  -> safe recommendation
+  -> adaptive runtime
+  -> approved slot and variant rendering
+```
+
+Demo or local-first usage:
+
+```ts
+import {
+  applyAdaptiveIntentRecommendation,
+  createHeuristicAdaptiveIntentCompiler
+} from '@adaptive-ui/llm';
+
+const compiler = createHeuristicAdaptiveIntentCompiler();
+
+const recommendation = await compiler.compile({
+  surface,
+  userRequest: 'Show charts first and let me move quickly with the keyboard.',
+  userProfile,
+  context,
+  currentPlan: plan,
+  language: 'en-US'
+});
+
+applyAdaptiveIntentRecommendation(recommendation, {
+  currentContext: context,
+  updateExplicitPreference,
+  patchContext
+});
+```
+
+Server-side OpenAI usage:
+
+```ts
+import { createOpenAIAdaptiveIntentCompiler } from '@adaptive-ui/llm/openai';
+
+const compiler = createOpenAIAdaptiveIntentCompiler({
+  apiKey: process.env.OPENAI_API_KEY,
+  model: 'gpt-5.4',
+  reasoningEffort: 'medium'
+});
+```
+
+The LLM layer should stay outside the critical render path.
+Use it for:
+
+- natural-language preference capture
+- operator recommendations
+- profile drafting
+- assistant-driven screen steering
+
+Do not use it for:
+
+- arbitrary DOM generation
+- bypassing surface contracts
+- replacing accessibility or policy guards
+
 ## SSR And Hydration
 
 The runtime is designed so the initial plan can be resolved on the server and reused on the client.
@@ -613,6 +692,7 @@ The example app in `examples/saas-dashboard` demonstrates:
 - novice manager mode
 - expert analyst mode
 - mobile quick-check mode
+- Korean intent input that immediately reshapes the screen inside approved variants
 - theme and density persistence
 - reduced motion handling
 - devtools inspection
@@ -654,6 +734,14 @@ The example app in `examples/saas-dashboard` demonstrates:
 
 - `createOpenTelemetryAdapter(config)`
 
+### LLM
+
+- `createAdaptiveIntentCompiler(options)`
+- `createHeuristicAdaptiveIntentCompiler()`
+- `applyAdaptiveIntentRecommendation(recommendation, handlers)`
+- `createOpenAIAdaptiveIntentCompiler(options)`
+- `createOpenAIAdaptiveTransport(options)`
+
 ## Testing And Verification
 
 This repository verifies the runtime at four different levels:
@@ -661,22 +749,23 @@ This repository verifies the runtime at four different levels:
 - pure core unit tests for scoring, precedence, persistence, serialization, explanation, and stability
 - React integration tests for provider lifecycle, slot rendering, overrides, focus preservation, and hydration safety
 - Playwright E2E coverage against the example dashboard
-- a consumer-style smoke test in [tests/usage/README.md](./tests/usage/README.md) that imports the built workspace packages like an external app would
+- consumer-style smoke tests in [tests/usage/README.md](./tests/usage/README.md) that import the built workspace packages like an external app would
 
 The consumer smoke test exists for a specific reason:
 
 - unit and integration tests prove internal correctness
 - example app tests prove the demo works
-- `tests/usage` proves that a downstream consumer can install the built packages, define a surface, render with React SSR, and observe explicit plus learned adaptation behavior
+- `tests/usage` proves that a downstream consumer can install the built packages, define a surface, render with React SSR, observe explicit plus learned adaptation behavior, and compile safe intent recommendations through `@adaptive-ui/llm`
 
 The usage smoke test intentionally runs after `pnpm build`.
 It should validate the published package contract, not internal source-path aliases.
 
-The `tests/usage` workspace currently validates one concrete flow end-to-end:
+The `tests/usage` workspace currently validates two concrete flows end-to-end:
 
 1. a fresh profile resolves the summary-first variant
 2. an explicit `defaultView = chart` override forces the chart variant
 3. repeated chart interaction updates the learned profile enough for the chart variant to win again when `defaultView` is reset to `auto`
+4. a natural-language request is compiled into safe preference updates and approved variant hints, then applied to the runtime state
 
 That test is intentionally small.
 Its role is not to replace unit or E2E coverage, but to catch packaging and consumer-entrypoint regressions that those layers often miss.
@@ -751,6 +840,7 @@ PATH=/opt/homebrew/bin:/usr/bin:/bin:$PATH pnpm bench
 - [Adoption Playbook](./docs/adoption-playbook.md)
 - [Security And Trust Boundaries](./docs/security-and-trust-boundaries.md)
 - [Devtools Guide](./docs/devtools.md)
+- [LLM Integration](./docs/llm-integration.md)
 - [Agent Guide](./docs/agent-guide.md)
 - [Change Playbook](./docs/change-playbook.md)
 - [Review Standards](./docs/review-standards.md)
@@ -878,6 +968,7 @@ Surface Schema + User Profile + Context Snapshot + Behavior Summary
 - `@adaptive-ui/react`: React용 thin adapter
 - `@adaptive-ui/devtools`: 현재 plan과 score breakdown을 보는 개발자 도구
 - `@adaptive-ui/otel`: telemetry를 OpenTelemetry로 내보내는 브리지
+- `@adaptive-ui/llm`: 자연어 화면 요청을 안전한 recommendation으로 바꾸는 intent compiler
 - `examples/saas-dashboard`: 동작 예시와 E2E 검증용 예제 앱
 
 ### 설치와 빠른 실행
@@ -1009,6 +1100,30 @@ React 쪽 public API는 다음처럼 작게 유지됩니다.
 
 React adapter는 가볍게 유지하고, 실제 의사결정은 `@adaptive-ui/core`가 담당합니다.
 
+### `@adaptive-ui/llm`으로 의도 기반 화면 전환
+
+사용자나 운영자가 “차트를 먼저 보고 싶다”, “모바일에서 승인만 빨리 하고 싶다” 같은 자연어 요청을 바로 넣고 싶다면 `@adaptive-ui/llm`을 control-plane 계층으로 붙이면 됩니다.
+
+중요한 점은 이 패키지가 DOM을 직접 생성하지 않는다는 것입니다.
+대신 아래처럼 안전한 recommendation만 만듭니다.
+
+- explicit preference update
+- bounded context patch
+- approved variant hint
+- 사용자에게 보여줄 설명 문구
+
+흐름은 아래와 같습니다.
+
+```text
+자연어 화면 요청
+  -> @adaptive-ui/llm
+  -> 검증된 recommendation
+  -> adaptive runtime
+  -> 승인된 slot / variant 렌더
+```
+
+즉 “원하는 화면을 바로 보여준다”는 경험은 제공하지만, 실제 구현은 자유 생성이 아니라 선언된 UI 계약 안에서의 즉시 재계획입니다.
+
 ### SSR과 hydration
 
 SSR 안전성은 이 프로젝트의 핵심 요구사항입니다.
@@ -1086,6 +1201,8 @@ SSR 안전성은 이 프로젝트의 핵심 요구사항입니다.
 - mobile quick-check user
   reduced chrome, touch-friendly spacing, quick stats first
 
+그리고 한국어 `원하는 화면 요청` 입력창을 통해 자연어 요구를 즉시 recommendation으로 바꿔 화면에 반영하는 흐름도 같이 시연합니다.
+
 이 예제 앱은 same app, different plan이라는 프로젝트 핵심 메시지를 보여주기 위한 vertical slice입니다.
 
 ### API와 검증
@@ -1106,6 +1223,11 @@ Core API 예시는 다음과 같습니다.
 - React integration test
 - Playwright E2E
 - consumer smoke test
+
+consumer smoke test는 이제 두 가지를 확인합니다.
+
+1. built package를 외부 앱처럼 import했을 때 core + react 흐름이 동작하는지
+2. `@adaptive-ui/llm`이 자연어 요청을 안전한 recommendation으로 바꾸고 적용할 수 있는지
 
 빠른 전체 검증은 아래처럼 실행하면 됩니다.
 
@@ -1151,6 +1273,7 @@ Core API 예시는 다음과 같습니다.
 - [Adoption Playbook](./docs/adoption-playbook.md)
 - [Security And Trust Boundaries](./docs/security-and-trust-boundaries.md)
 - [Devtools Guide](./docs/devtools.md)
+- [LLM Integration](./docs/llm-integration.md)
 - [Agent Guide](./docs/agent-guide.md)
 - [Change Playbook](./docs/change-playbook.md)
 - [Review Standards](./docs/review-standards.md)
