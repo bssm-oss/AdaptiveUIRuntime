@@ -54,7 +54,7 @@ show_help() {
   cat <<'EOF'
 Usage:
   ./run install
-  ./run dev [-- vite-args...]
+  ./run dev [-- extra-vite-args...]
   ./run preview [-- vite-preview-args...]
   ./run lint
   ./run typecheck
@@ -68,7 +68,7 @@ Usage:
 
 Commands:
   install    Run pnpm install.
-  dev        Start the SaaS dashboard example.
+  dev        Start the SaaS dashboard example on http://127.0.0.1:5173.
   preview    Preview the built SaaS dashboard example.
   lint       Run ESLint and Prettier checks.
   typecheck  Run workspace TypeScript checks.
@@ -98,7 +98,7 @@ case "$command_name" in
     ;;
   dev)
     ensure_install
-    run_filtered_script ./examples/saas-dashboard dev "$@"
+    pnpm --filter ./examples/saas-dashboard exec vite --host 127.0.0.1 --port 5173 --strictPort "$@"
     ;;
   preview)
     ensure_install
