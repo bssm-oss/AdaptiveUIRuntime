@@ -12,7 +12,15 @@ import type {
   UserProfile
 } from '@adaptive-ui/core';
 
+export type AdaptiveScenarioName =
+  | 'novice'
+  | 'expert'
+  | 'mobile'
+  | 'high-contrast'
+  | 'reduced-motion';
+
 export interface AdaptiveSimulationState {
+  name?: AdaptiveScenarioName;
   label?: string;
 }
 
@@ -27,9 +35,7 @@ export interface AdaptiveActions {
   resetPreferences(): void;
   commitPlan(plan: AdaptationPlan): void;
   freezeSurface(surfaceId: string, frozen: boolean): void;
-  simulateScenario(
-    name: 'novice' | 'expert' | 'mobile' | 'high-contrast' | 'reduced-motion'
-  ): void;
+  simulateScenario(name: AdaptiveScenarioName): void;
   clearSimulation(): void;
   setDevtoolsOpen(open: boolean): void;
 }

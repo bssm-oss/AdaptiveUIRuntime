@@ -14,12 +14,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bssm-oss/GenerativeUI.git",
+    "url": "https://github.com/bssm-oss/AdaptiveUIRuntime.git",
     "directory": "packages/otel"
   },
-  "homepage": "https://github.com/bssm-oss/GenerativeUI#readme",
+  "homepage": "https://github.com/bssm-oss/AdaptiveUIRuntime#readme",
   "bugs": {
-    "url": "https://github.com/bssm-oss/GenerativeUI/issues"
+    "url": "https://github.com/bssm-oss/AdaptiveUIRuntime/issues"
   },
   "exports": {
     ".": {

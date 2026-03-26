@@ -3,7 +3,7 @@ import type { VariantRule } from '@adaptive-ui/core';
 
 const chartPreferenceRule: VariantRule = {
   id: 'behavior-chart-heavy',
-  label: 'Chart heavy behavior',
+  label: '차트 중심 행동',
   apply(context) {
     return context.behaviorSummary.chartInteractions >
       context.behaviorSummary.tableInteractions
@@ -14,7 +14,7 @@ const chartPreferenceRule: VariantRule = {
 
 const keyboardRule: VariantRule = {
   id: 'behavior-keyboard-heavy',
-  label: 'Keyboard heavy behavior',
+  label: '키보드 중심 행동',
   apply(context) {
     return context.behaviorSummary.keyboardShortcuts > 2 ? 7 : 0;
   }
@@ -22,7 +22,7 @@ const keyboardRule: VariantRule = {
 
 export const dashboardHomeSurface = defineSurface({
   id: 'dashboard.home',
-  label: 'Adaptive SaaS dashboard',
+  label: '적응형 SaaS 대시보드',
   policies: {
     hysteresisThreshold: 8,
     navCooldownMs: 180_000,
@@ -30,7 +30,7 @@ export const dashboardHomeSurface = defineSurface({
   },
   zones: {
     primaryNav: {
-      label: 'Primary navigation',
+      label: '주요 탐색',
       kind: 'navigation',
       defaultVariant: 'sidebarNav',
       variants: {
@@ -48,7 +48,7 @@ export const dashboardHomeSurface = defineSurface({
             (context) =>
               context.context.deviceCategory !== 'mobile' || {
                 eligible: false,
-                reason: 'Sidebar nav is reserved for tablet and desktop.'
+                reason: '사이드바 탐색은 태블릿과 데스크톱에서만 사용합니다.'
               }
           ]
         },
@@ -86,7 +86,7 @@ export const dashboardHomeSurface = defineSurface({
       }
     },
     hero: {
-      label: 'Hero',
+      label: '히어로',
       kind: 'content',
       defaultVariant: 'noviceHero',
       variants: {
@@ -128,14 +128,14 @@ export const dashboardHomeSurface = defineSurface({
             (context) =>
               context.context.deviceCategory === 'mobile' || {
                 eligible: false,
-                reason: 'Mobile hero only appears for mobile contexts.'
+                reason: '모바일 히어로는 모바일 컨텍스트에서만 표시됩니다.'
               }
           ]
         }
       }
     },
     summaryPanel: {
-      label: 'Summary panel',
+      label: '요약 패널',
       kind: 'content',
       defaultVariant: 'summaryCards',
       variants: {
@@ -168,7 +168,7 @@ export const dashboardHomeSurface = defineSurface({
       }
     },
     mainContent: {
-      label: 'Main content',
+      label: '메인 콘텐츠',
       kind: 'content',
       defaultVariant: 'tablePowerView',
       variants: {
@@ -203,7 +203,7 @@ export const dashboardHomeSurface = defineSurface({
       }
     },
     sidePanel: {
-      label: 'Side panel',
+      label: '보조 패널',
       kind: 'support',
       defaultVariant: 'insightsRail',
       variants: {
@@ -232,7 +232,7 @@ export const dashboardHomeSurface = defineSurface({
           rules: [
             {
               id: 'behavior-collapse-rail',
-              label: 'Repeated rail collapse',
+              label: '반복적인 패널 접기',
               apply(context) {
                 return (context.behaviorSummary.widgetCollapses.sidePanel ??
                   0) > 1
@@ -245,7 +245,7 @@ export const dashboardHomeSurface = defineSurface({
       }
     },
     quickActions: {
-      label: 'Quick actions',
+      label: '빠른 액션',
       kind: 'actions',
       defaultVariant: 'prominentActions',
       variants: {
