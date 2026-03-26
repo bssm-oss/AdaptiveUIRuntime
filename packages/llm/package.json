@@ -1,0 +1,51 @@
+{
+  "name": "@adaptive-ui/llm",
+  "description": "LLM intent compiler for adaptive UI runtime with safe plan recommendations.",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bssm-oss/AdaptiveUIRuntime.git",
+    "directory": "packages/llm"
+  },
+  "homepage": "https://github.com/bssm-oss/AdaptiveUIRuntime#readme",
+  "bugs": {
+    "url": "https://github.com/bssm-oss/AdaptiveUIRuntime/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./openai": {
+      "types": "./dist/openai.d.ts",
+      "import": "./dist/openai.js",
+      "require": "./dist/openai.cjs"
+    }
+  },
+  "sideEffects": false,
+  "keywords": [
+    "adaptive-ui",
+    "llm",
+    "personalization",
+    "intent-compiler"
+  ],
+  "dependencies": {
+    "@adaptive-ui/core": "workspace:*",
+    "openai": "^6.33.0"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts src/openai.ts --format esm,cjs --dts --clean",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
+  }
+}
